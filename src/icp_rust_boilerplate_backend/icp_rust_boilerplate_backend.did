@@ -1,3 +1,16 @@
+type Book = record {
+  id : nat64;
+  title : text;
+  updated_at : opt nat64;
+  created_at : nat64;
+  author : text;
+};
+type BookPayload = record { title : text; author : text };
+type Error = variant { NotFound : record { msg : text } };
+type Result = variant { Ok : Book; Err : Error };
 service : {
-    "greet": (text) -> (text) query;
+  add_book : (BookPayload) -> (opt Book);
+  delete_book : (nat64) -> (Result);
+  get_book : (nat64) -> (Result) query;
+  update_book : (nat64, BookPayload) -> (Result);
 }
